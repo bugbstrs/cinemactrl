@@ -1,0 +1,62 @@
+services:
+  cinemactrl-postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: appdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  cinemactrl-backend:
+    build:
+      context: ./backend
+      tags:
+        - cinemactrl/backend:latest
+    environment:
+      DATABASE_URL: postgres://user:password@cinemactrl-postgres/appdb
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cinemactrl-postgres
+      - cinemactrl-booking
+      - cinemactrl-user
+      - cinemactrl-logging
+  cinemactrl-frontend:
+    build:
+      context: ./frontend
+      tags:
+        - cinemactrl/frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - cinemactrl-backend
+  cinemactrl-booking:
+    build:
+      context: ./backend
+      args:
+        - BUILT_SERVICE=booking-service
+      tags:
+        - cinemactrl/backend-booking:latest
+    environment:
+      port: 80
+  cinemactrl-user:
+    build:
+      context: ./backend
+      args:
+        - BUILT_SERVICE=user-service
+      tags:
+        - cinemactrl/backend-user:latest
+  cinemactrl-logging:
+    build:
+      context: ./backend
+      args:
+        - BUILT_SERVICE=logging-service
+      tags:
+        - cinemactrl/backend-logging:latest
+    # ports:
+    #   - "3001:3001"
+volumes:
+  postgres_data:
+    driver: local

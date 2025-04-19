@@ -1,0 +1,6 @@
+apps/*/test/*
+node_modules
+README.md
+*.dockerfile
+.dockerignore
+

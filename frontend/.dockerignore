@@ -1,0 +1,10 @@
+node_modules/
+.vscode
+.editorconfig
+.gitignore
+README.md
+*.spec.ts
+tsconfig.spec.json
+dist/
+dockerfile
+.dockerignore

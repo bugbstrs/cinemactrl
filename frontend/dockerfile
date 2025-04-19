@@ -1,0 +1,21 @@
+FROM node:lts-alpine AS builder
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm i -g bun
+
+RUN bun i
+
+RUN bun run build
+
+FROM oven/bun:alpine AS runner
+
+WORKDIR /app
+
+COPY --from=builder /app/dist/frontend/browser .
+
+EXPOSE 80
+
+CMD ["bunx", "serve", "-l", "80", "-s", "."]

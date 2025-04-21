@@ -17,7 +17,7 @@ services:
     environment:
       DATABASE_URL: postgres://user:password@cinemactrl-postgres/appdb
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
       - cinemactrl-postgres
       - cinemactrl-booking

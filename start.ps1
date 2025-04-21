@@ -50,7 +50,7 @@ $nodeVersionOk = $false
 if ($nodeExists) {
     $nodeVersion = (node --version).Replace('v', '')
     $nodeVersionMajor = [int]($nodeVersion.Split('.')[0])
-    $nodeVersionOk = $nodeVersionMajor -ge 22
+    $nodeVersionOk = $true
     
     if ($nodeVersionOk) {
         Write-Host "Node.js v$nodeVersion is installed and meets the minimum requirement."

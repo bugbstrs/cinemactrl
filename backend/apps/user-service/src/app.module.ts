@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { MoviesModule } from './movies/movies.module';
 import { TheatersModule } from './theaters/theaters.module';
 import { ShowingsModule } from './showings/showings.module';
+import { ReservationsModule } from './reservations/reservations.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ShowingsModule } from './showings/showings.module';
     MoviesModule,
     TheatersModule,
     ShowingsModule,
+    ReservationsModule,
   ],
   controllers: [],
   providers: [],

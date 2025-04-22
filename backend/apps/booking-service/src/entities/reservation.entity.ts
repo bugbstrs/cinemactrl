@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from '../../../user-service/src/entities/user.entity';
 import { AvailableShowing } from './available-showing.entity';
 
@@ -8,11 +8,13 @@ export class Reservation {
   id: number;
 
   @ManyToOne(() => User, user => user.reservations)
+  @JoinColumn()
   user: User;
 
   @ManyToOne(() => AvailableShowing, showing => showing.reservations)
+  @JoinColumn()
   showing: AvailableShowing;
 
   @Column()
-  seat: number;
+  seat: string;
 }

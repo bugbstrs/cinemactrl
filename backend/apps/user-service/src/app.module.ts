@@ -9,6 +9,7 @@ import { AvailableShowing } from '../../booking-service/src/entities/available-s
 import { Reservation } from '../../booking-service/src/entities/reservation.entity';
 import { AuthModule } from './auth/auth.module';
 import { MoviesModule } from './movies/movies.module';
+import { TheatersModule } from './theaters/theaters.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { MoviesModule } from './movies/movies.module';
     }),
     AuthModule,
     MoviesModule,
+    TheatersModule,
   ],
   controllers: [],
   providers: [],

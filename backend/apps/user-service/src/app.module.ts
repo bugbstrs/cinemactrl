@@ -10,6 +10,7 @@ import { Reservation } from '../../booking-service/src/entities/reservation.enti
 import { AuthModule } from './auth/auth.module';
 import { MoviesModule } from './movies/movies.module';
 import { TheatersModule } from './theaters/theaters.module';
+import { ShowingsModule } from './showings/showings.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { TheatersModule } from './theaters/theaters.module';
     AuthModule,
     MoviesModule,
     TheatersModule,
+    ShowingsModule,
   ],
   controllers: [],
   providers: [],

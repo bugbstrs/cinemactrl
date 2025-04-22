@@ -8,6 +8,7 @@ import { Theater } from '../../backend/src/entities/theater.entity';
 import { AvailableShowing } from '../../booking-service/src/entities/available-showing.entity';
 import { Reservation } from '../../booking-service/src/entities/reservation.entity';
 import { AuthModule } from './auth/auth.module';
+import { MoviesModule } from './movies/movies.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AuthModule } from './auth/auth.module';
       }),
     }),
     AuthModule,
+    MoviesModule,
   ],
   controllers: [],
   providers: [],

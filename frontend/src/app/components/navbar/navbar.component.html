@@ -1,0 +1,38 @@
+<p-menubar styleClass="shadow-md">
+    <!-- Left side with logo -->
+    <ng-template pTemplate="start">
+        <div class="flex align-items-center">
+            <p-button routerLink="/" variant="text" rounded="true">
+                <ng-template pTemplate="content">
+                    <i class="pi pi-video text-xl mr-3"></i>
+                    <span class="font-bold text-xl tracking-wide">CinemaCTRL</span>
+                </ng-template>
+            </p-button>
+        </div>
+    </ng-template>
+
+    <!-- Right side with buttons -->
+    <ng-template pTemplate="end">
+        <div class="flex gap-4 align-items-center">
+            <p-button label="Movies" icon="pi pi-film" variant="text" routerLink="/movies" rounded="true"></p-button>
+            <p-button label="Showings" icon="pi pi-calendar" variant="text" routerLink="/showings"
+                rounded="true"></p-button>
+
+            <!-- Not logged in -->
+            <ng-container *ngIf="!currentUser">
+                <p-button label="Login/Register" icon="pi pi-user" routerLink="/login" rounded="true"></p-button>
+            </ng-container>
+
+            <!-- Logged in -->
+            <ng-container *ngIf="currentUser">
+                <p-menu #menu [model]="items" [popup]="true"></p-menu>
+                <div class="flex align-items-center gap-2 cursor-pointer" (click)="menu.toggle($event)">
+                    <p-avatar icon="pi pi-user" styleClass="mr-2"
+                        [style]="{'background-color':'var(--primary-color)'}"></p-avatar>
+                    <span>{{ currentUser.username }}</span>
+                    <i class="pi pi-angle-down"></i>
+                </div>
+            </ng-container>
+        </div>
+    </ng-template>
+</p-menubar>

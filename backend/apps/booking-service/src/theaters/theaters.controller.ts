@@ -3,8 +3,8 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { TheatersService } from './theaters.service';
 import { CreateTheaterDto } from './dto/create-theater.dto';
 import { UpdateTheaterDto } from './dto/update-theater.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { AdminGuard } from '../auth/guards/admin.guard';
+import { JwtAuthGuard } from '../../../../shared/guards/jwt-auth.guard';
+import { AdminGuard } from '../../../../shared/guards/admin.guard';
 
 @ApiTags('Theaters')
 @Controller('theaters')

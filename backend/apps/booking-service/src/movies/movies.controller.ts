@@ -4,8 +4,8 @@ import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { CreateRatingDto } from './dto/create-rating.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { AdminGuard } from '../auth/guards/admin.guard';
+import { JwtAuthGuard } from '../../../../shared/guards/jwt-auth.guard';
+import { AdminGuard } from '../../../../shared/guards/admin.guard';
 
 @ApiTags('Movies')
 @Controller('movies')

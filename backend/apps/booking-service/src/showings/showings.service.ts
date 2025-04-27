@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AvailableShowing } from '../../../booking-service/src/entities/available-showing.entity';
-import { Movie } from '../../../backend/src/entities/movie.entity';
-import { Theater } from '../../../backend/src/entities/theater.entity';
+import { AvailableShowing } from '../../../../shared/entities/available-showing.entity';
+import { Movie } from '../../../../shared/entities/movie.entity';
+import { Theater } from '../../../../shared/entities/theater.entity';
+import { Reservation } from '../../../../shared/entities/reservation.entity';
 import { CreateShowingDto } from './dto/create-showing.dto';
 import { UpdateShowingDto } from './dto/update-showing.dto';
 
@@ -16,6 +17,8 @@ export class ShowingsService {
     private moviesRepository: Repository<Movie>,
     @InjectRepository(Theater)
     private theatersRepository: Repository<Theater>,
+    @InjectRepository(Reservation)
+    private reservationsRepository: Repository<Reservation>,
   ) {}
 
   async findAll(): Promise<any[]> {
@@ -50,6 +53,38 @@ export class ShowingsService {
       startTime: showing.startTime,
       theaterName: showing.theater.name,
       movieName: showing.movie.name,
+    };
+  }
+
+  async getAvailableSeats(showingId: number): Promise<any> {
+    const showing = await this.showingsRepository.findOne({
+      where: { id: showingId },
+      relations: ['theater'],
+    });
+
+    if (!showing) {
+      throw new NotFoundException(`Showing with ID ${showingId} not found`);
+    }
+
+    const reservations = await this.reservationsRepository.find({
+      where: { showing: { id: showingId } },
+    });
+
+    const totalSeats = showing.theater.capacity;
+    const reservedSeats = reservations.map(r => r.seat);
+    
+    const availableSeats: string[] = [];
+    for (let i = 1; i <= totalSeats; i++) {
+      const seatStr = i.toString();
+      if (!reservedSeats.includes(seatStr)) {
+        availableSeats.push(seatStr);
+      }
+    }
+
+    return {
+      totalSeats: totalSeats,
+      availableSeats: availableSeats,
+      reservedSeats: reservedSeats,
     };
   }
 

@@ -3,8 +3,8 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { ShowingsService } from './showings.service';
 import { CreateShowingDto } from './dto/create-showing.dto';
 import { UpdateShowingDto } from './dto/update-showing.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { AdminGuard } from '../auth/guards/admin.guard';
+import { JwtAuthGuard } from '../../../../shared/guards/jwt-auth.guard';
+import { AdminGuard } from '../../../../shared/guards/admin.guard';
 
 @ApiTags('Showings')
 @Controller('showings')
@@ -19,6 +19,11 @@ export class ShowingsController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.showingsService.findOne(id);
+  }
+
+  @Get(':id/available-seats')
+  getAvailableSeats(@Param('id', ParseIntPipe) showingId: number) {
+    return this.showingsService.getAvailableSeats(showingId);
   }
 
   @ApiBearerAuth()

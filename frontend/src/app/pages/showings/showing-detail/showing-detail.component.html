@@ -1,0 +1,47 @@
+<div class="p-4" *ngIf="showing">
+    <p-card>
+        <ng-template pTemplate="title">
+            <div class="flex justify-content-between align-items-center">
+                <h2 class="m-0">{{ showing.movieName }}</h2>
+                <div>
+                    <p-button *ngIf="isAuthenticated" label="Book Seats" icon="pi pi-ticket"
+                        (onClick)="openBookingDialog()"></p-button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="subtitle">
+            <div class="text-lg">{{ showing.theaterName }} - {{ showing.startTime | date:'medium' }}</div>
+        </ng-template>
+
+        <div *ngIf="seatInfo">
+            <h3>Seat Information</h3>
+            <div class="flex flex-column">
+                <span>Total Seats: {{ seatInfo.totalSeats }}</span>
+                <span>Available Seats: {{ seatInfo.availableSeats.length }}</span>
+                <span>Reserved Seats: {{ seatInfo.reservedSeats.length }}</span>
+            </div>
+        </div>
+
+        <div *ngIf="!isAuthenticated" class="mt-4 p-4 bg-yellow-50 border-round">
+            <p>Please <a routerLink="/login">login</a> to book seats for this showing.</p>
+        </div>
+    </p-card>
+</div>
+
+<p-dialog header="Book Seats" [(visible)]="bookingDialogVisible" [modal]="true" [style]="{width: '450px'}">
+    <div *ngIf="seatInfo">
+        <p>Select a seat to book:</p>
+        <div class="grid">
+            <div *ngFor="let seat of seatInfo.availableSeats" class="col-2">
+                <p-button [label]="seat.toString()" styleClass="p-button-sm"
+                    [ngClass]="{'p-button-success': selectedSeat === seat}" (onClick)="selectedSeat = seat"></p-button>
+            </div>
+        </div>
+        <div class="flex justify-content-end mt-4">
+            <p-button label="Cancel" styleClass="p-button-text" (onClick)="bookingDialogVisible = false"></p-button>
+            <p-button label="Book" (onClick)="bookSeat()" [disabled]="!selectedSeat"></p-button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-toast></p-toast>

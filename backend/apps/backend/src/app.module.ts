@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Movie } from './entities/movie.entity';
-import { Rating } from './entities/rating.entity';
-import { Theater } from './entities/theater.entity';
+import { Movie } from '../../../shared/entities/movie.entity';
+import { Rating } from '../../../shared/entities/rating.entity';
+import { Theater } from '../../../shared/entities/theater.entity';
+import { User } from 'shared/entities/user.entity';
+import { Reservation } from 'shared/entities/reservation.entity';
+import { AvailableShowing } from 'shared/entities/available-showing.entity';
+import { ProxyModule } from './proxy/proxy.module';
 
 @Module({
   imports: [
@@ -15,12 +17,13 @@ import { Theater } from './entities/theater.entity';
       username: process.env.CINEMACTRL_DB_USER ?? 'user',
       password: process.env.CINEMACTRL_DB_PASSWORD ?? 'password',
       database: process.env.CINEMACTRL_DB_DATABASE ?? 'appdb',
-      entities: [Movie, Rating, Theater],
+      entities: [User, Movie, Rating, Reservation, AvailableShowing, Theater],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Movie, Rating, Theater]),
+    TypeOrmModule.forFeature([User, Movie, Rating, Reservation, AvailableShowing, Theater]),
+    ProxyModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

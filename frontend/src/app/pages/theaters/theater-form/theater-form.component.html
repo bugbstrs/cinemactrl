@@ -1,0 +1,30 @@
+<div class="p-4">
+    <p-card [header]="isEditMode ? 'Edit Theater' : 'Create Theater'" styleClass="shadow-lg">
+        <form [formGroup]="theaterForm" (ngSubmit)="onSubmit()">
+            <div class="grid">
+                <div class="col-12 md:col-6 field">
+                    <label for="name">Theater Name</label>
+                    <input id="name" type="text" pInputText formControlName="name" class="w-full" />
+                    <small *ngIf="theaterForm.get('name')?.invalid && theaterForm.get('name')?.touched"
+                        class="p-error">Name is required</small>
+                </div>
+
+                <div class="col-12 md:col-6 field">
+                    <label for="capacity">Capacity</label>
+                    <p-inputNumber id="capacity" formControlName="capacity" [min]="1"></p-inputNumber>
+                    <small *ngIf="theaterForm.get('capacity')?.invalid && theaterForm.get('capacity')?.touched"
+                        class="p-error">Capacity is required</small>
+                </div>
+
+                <div class="col-12 flex gap-2">
+                    <p-button label="Cancel" styleClass="p-button-secondary" type="button"
+                        routerLink="/theaters"></p-button>
+                    <p-button [label]="isEditMode ? 'Update' : 'Create'" type="submit"
+                        [disabled]="theaterForm.invalid"></p-button>
+                </div>
+            </div>
+        </form>
+    </p-card>
+</div>
+
+<p-toast></p-toast>

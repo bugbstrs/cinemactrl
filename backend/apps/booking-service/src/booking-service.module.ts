@@ -1,8 +1,15 @@
 import { Module } from '@nestjs/common';
-import { BookingServiceController } from './booking-service.controller';
-import { BookingServiceService } from './booking-service.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Booking } from './entities/booking.entity';
+import { ReservationsModule } from './reservations/reservations.module';
+import { ShowingsModule } from './showings/showings.module';
+import { TheatersModule } from './theaters/theaters.module';
+import { MoviesModule } from './movies/movies.module';
+import { User } from 'shared/entities/user.entity';
+import { Movie } from 'shared/entities/movie.entity';
+import { Rating } from 'shared/entities/rating.entity';
+import { Reservation } from 'shared/entities/reservation.entity';
+import { AvailableShowing } from 'shared/entities/available-showing.entity';
+import { Theater } from 'shared/entities/theater.entity';
 
 @Module({
   imports: [
@@ -13,12 +20,16 @@ import { Booking } from './entities/booking.entity';
       username: process.env.CINEMACTRL_DB_USER ?? 'user',
       password: process.env.CINEMACTRL_DB_PASSWORD ?? 'password',
       database: process.env.CINEMACTRL_DB_DATABASE ?? 'appdb',
-      entities: [Booking],
+      entities: [User, Movie, Rating, Reservation, AvailableShowing, Theater],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Booking]),
+    TypeOrmModule.forFeature([User, Movie, Rating, Reservation, AvailableShowing, Theater]),
+    ReservationsModule,
+    ShowingsModule,
+    TheatersModule,
+    MoviesModule
   ],
-  controllers: [BookingServiceController],
-  providers: [BookingServiceService],
+  controllers: [],
+  providers: [],
 })
 export class BookingServiceModule {}

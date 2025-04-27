@@ -1,0 +1,23 @@
+<div class="flex align-items-center justify-content-center h-screen">
+    <p-card header="Register" styleClass="w-full max-w-30rem shadow-lg">
+        <div class="flex flex-column gap-3">
+            <div class="field">
+                <label for="username" class="block mb-2">Username</label>
+                <input id="username" type="text" pInputText class="w-full" [(ngModel)]="username" />
+            </div>
+            <div class="field">
+                <label for="fullName" class="block mb-2">Full Name</label>
+                <input id="fullName" type="text" pInputText class="w-full" [(ngModel)]="fullName" />
+            </div>
+            <div class="field">
+                <label for="password" class="block mb-2">Password</label>
+                <p-password id="password" [toggleMask]="true" styleClass="w-full" [(ngModel)]="password"></p-password>
+            </div>
+            <p-button label="Register" [loading]="loading" styleClass="w-full" (onClick)="register()"></p-button>
+            <div class="text-center mt-3">
+                Already have an account? <a routerLink="/login" class="text-primary font-medium">Login</a>
+            </div>
+        </div>
+    </p-card>
+</div>
+<p-toast></p-toast>

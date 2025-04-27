@@ -1,0 +1,25 @@
+<div class="p-4">
+    <div class="text-center mb-6">
+        <h1>Welcome to CinemaCTRL</h1>
+        <p class="text-lg mb-4">Find the latest movies and book your tickets</p>
+        <p-button label="View All Movies" routerLink="/movies"></p-button>
+    </div>
+
+    <h2 class="mb-3">Featured Movies</h2>
+    <p-carousel [value]="featuredMovies" [numVisible]="3" [numScroll]="1" [circular]="true">
+        <ng-template let-movie pTemplate="item">
+            <div class="m-2">
+                <p-card styleClass="h-25rem">
+                    <ng-template pTemplate="header">
+                        <img [src]="movie.imageUrl" alt="Movie poster" class="w-full h-15rem object-cover" />
+                    </ng-template>
+                    <h3>{{ movie.name }}</h3>
+                    <p class="line-clamp-2">{{ movie.description }}</p>
+                    <ng-template pTemplate="footer">
+                        <p-button label="View Details" [routerLink]="['/movies', movie.id]"></p-button>
+                    </ng-template>
+                </p-card>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>

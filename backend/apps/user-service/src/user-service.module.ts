@@ -1,5 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from '../../../shared/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
+import { Movie } from 'shared/entities/movie.entity';
+import { Rating } from 'shared/entities/rating.entity';
+import { Reservation } from 'shared/entities/reservation.entity';
+import { AvailableShowing } from 'shared/entities/available-showing.entity';
+import { Theater } from 'shared/entities/theater.entity';
 
 @Module({
   imports: [
@@ -10,10 +17,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: process.env.CINEMACTRL_DB_USER ?? 'user',
       password: process.env.CINEMACTRL_DB_PASSWORD ?? 'password',
       database: process.env.CINEMACTRL_DB_DATABASE ?? 'appdb',
-      entities: [],
+      entities: [User, Movie, Rating, Reservation, AvailableShowing, Theater],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([User, Movie, Rating, Reservation, AvailableShowing, Theater]),
+    AuthModule
   ],
   controllers: [],
   providers: [],

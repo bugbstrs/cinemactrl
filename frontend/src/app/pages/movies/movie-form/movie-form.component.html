@@ -1,0 +1,59 @@
+<div class="p-4">
+    <p-card [header]="isEditMode ? 'Edit Movie' : 'Create Movie'" styleClass="shadow-lg">
+        <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
+            <div class="grid">
+                <div class="col-12 md:col-6 field">
+                    <label for="name">Movie Title</label>
+                    <input id="name" type="text" pInputText formControlName="name" class="w-full" />
+                    <small *ngIf="movieForm.get('name')?.invalid && movieForm.get('name')?.touched"
+                        class="p-error">Title is required</small>
+                </div>
+
+                <div class="col-12 md:col-6 field">
+                    <label for="ageRating">Age Rating</label>
+                    <p-inputNumber id="ageRating" formControlName="ageRating" [min]="0" [max]="18"></p-inputNumber>
+                    <small *ngIf="movieForm.get('ageRating')?.invalid && movieForm.get('ageRating')?.touched"
+                        class="p-error">Age rating is required</small>
+                </div>
+
+                <div class="col-12 md:col-6 field">
+                    <label for="duration">Duration (minutes)</label>
+                    <p-inputNumber id="duration" formControlName="duration" [min]="1"></p-inputNumber>
+                    <small *ngIf="movieForm.get('duration')?.invalid && movieForm.get('duration')?.touched"
+                        class="p-error">Duration is required</small>
+                </div>
+
+                <div class="col-12 md:col-6 field">
+                    <label for="releaseDate">Release Date</label>
+                    <p-calendar id="releaseDate" formControlName="releaseDate" dateFormat="yy-mm-dd"></p-calendar>
+                    <small *ngIf="movieForm.get('releaseDate')?.invalid && movieForm.get('releaseDate')?.touched"
+                        class="p-error">Release date is required</small>
+                </div>
+
+                <div class="col-12 field">
+                    <label for="imageUrl">Image URL</label>
+                    <input id="imageUrl" type="text" pInputText formControlName="imageUrl" class="w-full" />
+                    <small *ngIf="movieForm.get('imageUrl')?.invalid && movieForm.get('imageUrl')?.touched"
+                        class="p-error">A valid URL is required</small>
+                </div>
+
+                <div class="col-12 field">
+                    <label for="description">Description</label>
+                    <textarea id="description" pInputTextarea formControlName="description" [rows]="5" [cols]="30"
+                        class="w-full"></textarea>
+                    <small *ngIf="movieForm.get('description')?.invalid && movieForm.get('description')?.touched"
+                        class="p-error">Description is required</small>
+                </div>
+
+                <div class="col-12 flex gap-2">
+                    <p-button label="Cancel" styleClass="p-button-secondary" type="button"
+                        routerLink="/movies"></p-button>
+                    <p-button [label]="isEditMode ? 'Update' : 'Create'" type="submit"
+                        [disabled]="movieForm.invalid"></p-button>
+                </div>
+            </div>
+        </form>
+    </p-card>
+</div>
+
+<p-toast></p-toast>

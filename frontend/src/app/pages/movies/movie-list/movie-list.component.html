@@ -1,0 +1,50 @@
+<div class="p-4">
+    <div class="flex justify-content-between align-items-center mb-4">
+        <h1>Movies</h1>
+        <p-button *ngIf="isAdmin" icon="pi pi-plus" label="Add Movie" routerLink="/admin/movies/create"></p-button>
+    </div>
+
+    <p-table [value]="movies" [paginator]="true" [rows]="10" styleClass="p-datatable-sm"
+        [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Age Rating</th>
+                <th>Duration</th>
+                <th>Release Date</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-movie>
+            <tr>
+                <td>{{ movie.name }}</td>
+                <td>
+                    <p-tag [value]="movie.ageRating + '+'"></p-tag>
+                </td>
+                <td>{{ movie.duration }} min</td>
+                <td>{{ movie.releaseDate | date }}</td>
+                <td>
+                    <div class="flex gap-2">
+                        <p-button icon="pi pi-eye" styleClass="p-button-sm"
+                            [routerLink]="['/movies', movie.id]"></p-button>
+                        <p-button *ngIf="isAdmin" icon="pi pi-pencil" styleClass="p-button-sm p-button-warning"
+                            [routerLink]="['/admin/movies', movie.id, 'edit']"></p-button>
+                        <p-button *ngIf="isAdmin" icon="pi pi-trash" styleClass="p-button-sm p-button-danger"
+                            (onClick)="confirmDelete(movie)"></p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Confirm Deletion" [(visible)]="deleteDialogVisible" [modal]="true" [style]="{width: '450px'}">
+    <p class="m-0">Are you sure you want to delete {{ selectedMovie?.name }}?</p>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" label="No" styleClass="p-button-text"
+            (onClick)="deleteDialogVisible = false"></p-button>
+        <p-button icon="pi pi-check" label="Yes" styleClass="p-button-danger" (onClick)="deleteMovie()"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-toast></p-toast>

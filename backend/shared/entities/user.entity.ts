@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Rating } from '../../../backend/src/entities/rating.entity';
-import { Reservation } from '../../../booking-service/src/entities/reservation.entity';
+import { Rating } from './rating.entity';
+import { Reservation } from './reservation.entity';
 
 export enum UserRole {
   ADMIN = 'admin',

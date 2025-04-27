@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { Theater } from '../../../backend/src/entities/theater.entity';
-import { Movie } from '../../../backend/src/entities/movie.entity';
-import { Reservation } from '../../../booking-service/src/entities/reservation.entity';
+import { Theater } from './theater.entity';
+import { Movie } from './movie.entity';
+import { Reservation } from './reservation.entity';
 
 @Entity()
 export class AvailableShowing {

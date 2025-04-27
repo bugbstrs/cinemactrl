@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Rating } from './rating.entity';
-import { AvailableShowing } from '../../../booking-service/src/entities/available-showing.entity';
+import { AvailableShowing } from './available-showing.entity';
 
 @Entity()
 export class Movie {

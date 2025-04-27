@@ -15,7 +15,11 @@ services:
       tags:
         - cinemactrl/backend:latest
     environment:
-      DATABASE_URL: postgres://user:password@cinemactrl-postgres/appdb
+      CINEMACTRL_DB_HOST: cinemactrl-postgres
+      CINEMACTRL_DB_PASSWORD: password
+      CINEMACTRL_DB_USER: user
+      CINEMACTRL_DB_DATABASE: appdb
+      CINEMACTRL_DB_PORT: 5432
     ports:
       - "3000:80"
     depends_on:
@@ -33,15 +37,25 @@ services:
     depends_on:
       - cinemactrl-backend
   cinemactrl-booking:
+    environment:
+      CINEMACTRL_DB_HOST: cinemactrl-postgres
+      CINEMACTRL_DB_PASSWORD: password
+      CINEMACTRL_DB_USER: user
+      CINEMACTRL_DB_DATABASE: appdb
+      CINEMACTRL_DB_PORT: 5432
     build:
       context: ./backend
       args:
         - BUILT_SERVICE=booking-service
       tags:
         - cinemactrl/backend-booking:latest
-    environment:
-      port: 80
   cinemactrl-user:
+    environment:
+      CINEMACTRL_DB_HOST: cinemactrl-postgres
+      CINEMACTRL_DB_PASSWORD: password
+      CINEMACTRL_DB_USER: user
+      CINEMACTRL_DB_DATABASE: appdb
+      CINEMACTRL_DB_PORT: 5432
     build:
       context: ./backend
       args:
@@ -49,14 +63,18 @@ services:
       tags:
         - cinemactrl/backend-user:latest
   cinemactrl-logging:
+    environment:
+      CINEMACTRL_DB_HOST: cinemactrl-postgres
+      CINEMACTRL_DB_PASSWORD: password
+      CINEMACTRL_DB_USER: user
+      CINEMACTRL_DB_DATABASE: appdb
+      CINEMACTRL_DB_PORT: 5432
     build:
       context: ./backend
       args:
         - BUILT_SERVICE=logging-service
       tags:
         - cinemactrl/backend-logging:latest
-    # ports:
-    #   - "3001:3001"
 volumes:
   postgres_data:
     driver: local

@@ -1,0 +1,46 @@
+<div class="p-4">
+    <h1>My Reservations</h1>
+
+    <p-table [value]="reservations" [paginator]="true" [rows]="10" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Movie</th>
+                <th>Theater</th>
+                <th>Date & Time</th>
+                <th>Seat</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-reservation>
+            <tr>
+                <td>{{ reservation.movieName }}</td>
+                <td>{{ reservation.theaterName }}</td>
+                <td>{{ reservation.startTime | date:'medium' }}</td>
+                <td>{{ reservation.seat }}</td>
+                <td>
+                    <p-button icon="pi pi-times" styleClass="p-button-sm p-button-danger"
+                        (onClick)="confirmCancel(reservation)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5" class="text-center p-4">
+                    You don't have any reservations yet.
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Cancel Reservation" [(visible)]="cancelDialogVisible" [modal]="true">
+    <p>Are you sure you want to cancel this reservation?</p>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" label="No" styleClass="p-button-text"
+            (onClick)="cancelDialogVisible = false"></p-button>
+        <p-button icon="pi pi-check" label="Yes" styleClass="p-button-danger"
+            (onClick)="cancelReservation()"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-toast></p-toast>

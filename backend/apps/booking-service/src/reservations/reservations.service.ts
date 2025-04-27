@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Reservation } from '../../../booking-service/src/entities/reservation.entity';
-import { AvailableShowing } from '../../../booking-service/src/entities/available-showing.entity';
-import { Theater } from '../../../backend/src/entities/theater.entity';
+import { Reservation } from '../../../../shared/entities/reservation.entity';
+import { AvailableShowing } from '../../../../shared/entities/available-showing.entity';
+import { Theater } from '../../../../shared/entities/theater.entity';
 import { CreateReservationDto } from './dto/create-reservation.dto';
-import { User } from '../entities/user.entity';
+import { User } from '../../../../shared/entities/user.entity';
 
 @Injectable()
 export class ReservationsService {
@@ -76,38 +76,6 @@ export class ReservationsService {
       userId: userId,
       showingId: showingId,
       seat: seat,
-    };
-  }
-
-  async getAvailableSeats(showingId: number): Promise<any> {
-    const showing = await this.showingsRepository.findOne({
-      where: { id: showingId },
-      relations: ['theater'],
-    });
-
-    if (!showing) {
-      throw new NotFoundException(`Showing with ID ${showingId} not found`);
-    }
-
-    const reservations = await this.reservationsRepository.find({
-      where: { showing: { id: showingId } },
-    });
-
-    const totalSeats = showing.theater.capacity;
-    const reservedSeats = reservations.map(r => r.seat);
-    
-    const availableSeats: string[] = [];
-    for (let i = 1; i <= totalSeats; i++) {
-      const seatStr = i.toString();
-      if (!reservedSeats.includes(seatStr)) {
-        availableSeats.push(seatStr);
-      }
-    }
-
-    return {
-      totalSeats: totalSeats,
-      availableSeats: availableSeats,
-      reservedSeats: reservedSeats,
     };
   }
 

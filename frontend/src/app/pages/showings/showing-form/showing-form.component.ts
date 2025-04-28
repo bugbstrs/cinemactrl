@@ -11,6 +11,8 @@ import { MessageService } from 'primeng/api';
 import { ShowingService } from '../../../services/showing.service';
 import { MovieService, Movie } from '../../../services/movie.service';
 import { TheaterService, Theater } from '../../../services/theater.service';
+import { DatePickerModule } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-showing-form',
@@ -20,8 +22,8 @@ import { TheaterService, Theater } from '../../../services/theater.service';
     ReactiveFormsModule,
     RouterLink,
     CardModule,
-    DropdownModule,
-    CalendarModule,
+    SelectModule,
+    DatePickerModule,
     ButtonModule,
     ToastModule
   ],

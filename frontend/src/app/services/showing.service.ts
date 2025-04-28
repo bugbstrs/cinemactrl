@@ -21,7 +21,7 @@ export interface AvailableSeats {
   providedIn: 'root'
 })
 export class ShowingService {
-  private apiUrl = 'http://localhost:3000/showings';
+  private apiUrl = 'http://localhost:3000/api/booking/showings';
 
   constructor(private http: HttpClient) {}
 

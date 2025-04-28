@@ -25,6 +25,7 @@ export class ShowingDetailComponent implements OnInit {
   bookingDialogVisible = false;
   selectedSeat: number | null = null;
   isAuthenticated = false;
+  showBookingDiv = false;
 
   constructor(
     private route: ActivatedRoute,

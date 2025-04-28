@@ -67,7 +67,7 @@ export class TheaterFormComponent implements OnInit {
           summary: 'Error',
           detail: 'Failed to load theater details'
         });
-        this.router.navigate(['/theaters']);
+        // this.router.navigate(['/']);
       }
     });
   }
@@ -83,7 +83,7 @@ export class TheaterFormComponent implements OnInit {
             summary: 'Success',
             detail: 'Theater updated successfully'
           });
-          this.router.navigate(['/theaters']);
+          this.router.navigate(['/admin/theaters']);
         },
         error: (err) => {
           this.messageService.add({
@@ -101,7 +101,7 @@ export class TheaterFormComponent implements OnInit {
             summary: 'Success',
             detail: 'Theater created successfully'
           });
-          this.router.navigate(['/theaters']);
+          this.router.navigate(['/admin/theaters']);
         },
         error: (err) => {
           this.messageService.add({

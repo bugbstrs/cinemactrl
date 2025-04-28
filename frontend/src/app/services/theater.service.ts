@@ -12,7 +12,7 @@ export interface Theater {
   providedIn: 'root'
 })
 export class TheaterService {
-  private apiUrl = 'http://localhost:3000/theaters';
+  private apiUrl = 'http://localhost:3000/api/booking/theaters';
 
   constructor(private http: HttpClient) {}
 

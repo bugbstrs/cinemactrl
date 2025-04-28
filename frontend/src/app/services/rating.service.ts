@@ -12,7 +12,7 @@ export interface RatingResponse {
   providedIn: 'root'
 })
 export class RatingService {
-  private apiUrl = 'http://localhost:3000/movies';
+  private apiUrl = 'http://localhost:3000/api/booking/movies';
 
   constructor(private http: HttpClient) {}
 

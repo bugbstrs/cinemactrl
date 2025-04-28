@@ -33,11 +33,6 @@ export class NavbarComponent implements OnInit {
   updateMenuItems() {
     const baseItems = [
       {
-        label: 'Profile',
-        icon: 'pi pi-user',
-        routerLink: '/profile'
-      },
-      {
         label: 'My Reservations',
         icon: 'pi pi-ticket',
         routerLink: '/reservations'
@@ -61,22 +56,22 @@ export class NavbarComponent implements OnInit {
           items: [
             {
               label: 'Manage Movies',
-              icon: 'pi pi-film',
+              icon: 'pi pi-ticket',
               routerLink: '/movies'
             },
             {
               label: 'Manage Theaters',
               icon: 'pi pi-building',
-              routerLink: '/theaters'
+              routerLink: '/admin/theaters'
             },
             {
               label: 'Manage Showings',
               icon: 'pi pi-calendar',
               routerLink: '/showings'
-            }
+            },
+            ...baseItems
           ]
         },
-        ...baseItems
       ];
     } else {
       this.items = baseItems;

@@ -5,7 +5,7 @@
             <p-button routerLink="/" variant="text" rounded="true">
                 <ng-template pTemplate="content">
                     <i class="pi pi-video text-xl mr-3"></i>
-                    <span class="font-bold text-xl tracking-wide">CinemaCTRL</span>
+                    <span class="text-xl tracking-wide">CinemaCTRL</span>
                 </ng-template>
             </p-button>
         </div>
@@ -26,12 +26,14 @@
             <!-- Logged in -->
             <ng-container *ngIf="currentUser">
                 <p-menu #menu [model]="items" [popup]="true"></p-menu>
-                <div class="flex align-items-center gap-2 cursor-pointer" (click)="menu.toggle($event)">
-                    <p-avatar icon="pi pi-user" styleClass="mr-2"
-                        [style]="{'background-color':'var(--primary-color)'}"></p-avatar>
-                    <span>{{ currentUser.username }}</span>
-                    <i class="pi pi-angle-down"></i>
-                </div>
+                <p-button (click)="menu.toggle($event)" variant="text" class="flex align-items-center gap-2">
+                    <ng-template pTemplate="content">
+                        <p-avatar icon="pi pi-user" styleClass="mr-2"
+                            [style]="{'background-color':'var(--primary-color)'}"></p-avatar>
+                        <span>{{ currentUser.username }}</span>
+                        <i class="pi pi-angle-down"></i>
+                    </ng-template>
+                </p-button>
             </ng-container>
         </div>
     </ng-template>

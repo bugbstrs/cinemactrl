@@ -5,6 +5,8 @@ import { Movie } from '../../../../shared/entities/movie.entity';
 import { Rating } from '../../../../shared/entities/rating.entity';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { AvailableShowing } from 'shared/entities/available-showing.entity';
+import { Reservation } from 'shared/entities/reservation.entity';
 
 @Injectable()
 export class MoviesService {
@@ -13,6 +15,10 @@ export class MoviesService {
     private moviesRepository: Repository<Movie>,
     @InjectRepository(Rating)
     private ratingRepository: Repository<Rating>,
+    @InjectRepository(AvailableShowing)
+    private showingsRepository: Repository<AvailableShowing>,
+    @InjectRepository(Reservation)
+    private reservationRepository: Repository<Reservation>,
   ) {}
 
   async findAll(): Promise<Movie[]> {
@@ -48,7 +54,24 @@ export class MoviesService {
   }
 
   async remove(id: number): Promise<{ success: boolean }> {
+    const reservationsForMovie = await this.reservationRepository.find({
+      where: { showing: { movie: { id } } },
+    });
+
+    if (reservationsForMovie.length > 0) {
+      await this.reservationRepository.delete(reservationsForMovie.map(reservation => reservation.id));
+    }
+
+    const availableShowings = await this.showingsRepository.find({
+      where: { movie: { id } },
+    });
+
+    if (availableShowings.length > 0) {
+      await this.showingsRepository.delete(availableShowings.map(showing => showing.id));
+    }
+
     const result = await this.moviesRepository.delete(id);
+
     if (result.affected === 0) {
       throw new NotFoundException(`Movie with ID ${id} not found`);
     }

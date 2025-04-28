@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { Textarea } from 'primeng/textarea';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MovieService, Movie } from '../../../services/movie.service';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-movie-form',
@@ -21,9 +20,10 @@ import { MovieService, Movie } from '../../../services/movie.service';
     CardModule,
     InputTextModule,
     InputNumberModule,
-    CalendarModule,
+    DatePickerModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    RouterLink
   ],
   providers: [MessageService],
   templateUrl: './movie-form.component.html',

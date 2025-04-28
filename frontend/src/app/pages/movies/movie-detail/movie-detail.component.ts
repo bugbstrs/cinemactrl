@@ -16,7 +16,7 @@ import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-movie-detail',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CardModule, TagModule, RatingModule, FormsModule, DialogModule, ToastModule],
+  imports: [CommonModule, RouterLink, ButtonModule, CardModule, TagModule, RatingModule, FormsModule, DialogModule, ToastModule],
   providers: [MessageService],
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.scss']

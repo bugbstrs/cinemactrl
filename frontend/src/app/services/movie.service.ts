@@ -16,7 +16,7 @@ export interface Movie {
   providedIn: 'root'
 })
 export class MovieService {
-  private apiUrl = 'http://localhost:3000/movies';
+  private apiUrl = 'http://localhost:3000/api/booking/movies';
 
   constructor(private http: HttpClient) {}
 

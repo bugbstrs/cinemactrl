@@ -7,6 +7,11 @@ services:
       POSTGRES_DB: appdb
     ports:
       - "5432:5432"
+    healthcheck:
+      test: /usr/bin/pg_isready
+      interval: 5s
+      timeout: 10s
+      retries: 120
     volumes:
       - postgres_data:/var/lib/postgresql/data
   cinemactrl-backend:
@@ -26,10 +31,14 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - cinemactrl-postgres
-      - cinemactrl-booking
-      - cinemactrl-user
-      - cinemactrl-logging
+      cinemactrl-postgres:
+        condition: service_healthy
+      cinemactrl-booking:
+        condition: service_started
+      cinemactrl-user:
+        condition: service_started
+      cinemactrl-logging:
+        condition: service_started
   cinemactrl-frontend:
     depends_on:
       - cinemactrl-backend
@@ -41,7 +50,8 @@ services:
       - "80:80"
   cinemactrl-booking:
     depends_on:
-      - cinemactrl-postgres
+      cinemactrl-postgres:
+        condition: service_healthy
     environment:
       CINEMACTRL_DB_HOST: cinemactrl-postgres
       CINEMACTRL_DB_PASSWORD: password
@@ -56,7 +66,8 @@ services:
         - cinemactrl/backend-booking:latest
   cinemactrl-user:
     depends_on:
-      - cinemactrl-postgres
+      cinemactrl-postgres:
+        condition: service_healthy
     environment:
       CINEMACTRL_DB_HOST: cinemactrl-postgres
       CINEMACTRL_DB_PASSWORD: password
@@ -71,7 +82,8 @@ services:
         - cinemactrl/backend-user:latest
   cinemactrl-logging:
     depends_on:
-      - cinemactrl-postgres
+      cinemactrl-postgres:
+        condition: service_healthy
     environment:
       CINEMACTRL_DB_HOST: cinemactrl-postgres
       CINEMACTRL_DB_PASSWORD: password
@@ -86,7 +98,8 @@ services:
         - cinemactrl/backend-logging:latest
   cinemactrl-seeder:
     depends_on:
-      - cinemactrl-postgres
+      cinemactrl-postgres:
+        condition: service_healthy
     build:
       context: ./seeds
       tags:

@@ -1,0 +1,15 @@
+{
+  "name": "seeds",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "pg": "^8.15.6",
+    "typeorm": "^0.3.22"
+  }
+}

@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import * as bcryptjs from 'bcryptjs';
 
-// Create a direct database connection without entity classes
 const AppDataSource = new DataSource({
   type: 'postgres',
   host: process.env.CINEMACTRL_DB_HOST ?? 'localhost',
@@ -10,16 +9,14 @@ const AppDataSource = new DataSource({
   username: process.env.CINEMACTRL_DB_USER ?? 'user',
   password: process.env.CINEMACTRL_DB_PASSWORD ?? 'password',
   database: process.env.CINEMACTRL_DB_DATABASE ?? 'appdb',
-  synchronize: false, // Don't auto-sync schema
+  synchronize: false,
 });
 
-// Helper function to get random elements from an array
 function getRandomElements<T>(array: T[], count: number): T[] {
   const shuffled = [...array].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
 
-// User roles enum (copy to avoid import)
 enum UserRole {
   USER = 'user',
   ADMIN = 'admin'
@@ -30,15 +27,12 @@ async function seed() {
     await AppDataSource.initialize();
     console.log("Database connection initialized");
     
-    // Use query runners instead of repositories to bypass entity issues
     const queryRunner = AppDataSource.createQueryRunner();
     await queryRunner.connect();
     
-    // Start a transaction
     await queryRunner.startTransaction();
     
     try {
-      // Seed users
       const userCount = await queryRunner.query('SELECT COUNT(*) FROM "user"');
       if (parseInt(userCount[0].count) === 0) {
         const passwordHash = await bcryptjs.hash('password123', 10);
@@ -64,7 +58,6 @@ async function seed() {
         console.log('Users already seeded');
       }
       
-      // Seed movies
       const movieCount = await queryRunner.query('SELECT COUNT(*) FROM movie');
       if (parseInt(movieCount[0].count) === 0) {
         const movies = [
@@ -122,7 +115,6 @@ async function seed() {
         console.log('Movies already seeded');
       }
       
-      // Seed theaters
       const theaterCount = await queryRunner.query('SELECT COUNT(*) FROM theater');
       if (parseInt(theaterCount[0].count) === 0) {
         const theaters = [

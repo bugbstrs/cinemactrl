@@ -1,0 +1,11 @@
+FROM node:lts-alpine
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm i -g bun
+
+RUN bun i
+
+CMD [ "bun", "seed.ts" ]

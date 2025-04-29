@@ -57,8 +57,6 @@ export class MovieDetailComponent implements OnInit {
     this.ratingService.getRatings(movieId).subscribe(ratings => {
       this.ratings = ratings;
       if (ratings.rated) {
-        // If user has rated, pre-fill the rating value
-        // Note: API would need to return user's rating value
         this.userRating = ratings.averageRating;
       }
     });

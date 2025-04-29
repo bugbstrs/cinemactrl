@@ -136,7 +136,6 @@ async function seed() {
         console.log('Theaters already seeded');
       }
       
-      // Seed showings
       const showingCount = await queryRunner.query('SELECT COUNT(*) FROM available_showing');
       if (parseInt(showingCount[0].count) === 0) {
         const movies = await queryRunner.query('SELECT id FROM movie');
@@ -149,19 +148,15 @@ async function seed() {
           date.setDate(date.getDate() + day);
           
           for (const theater of theaters) {
-            // Morning showing
             const morningTime = new Date(date);
             morningTime.setHours(10, 0, 0, 0);
             
-            // Afternoon showing
             const afternoonTime = new Date(date);
             afternoonTime.setHours(15, 0, 0, 0);
             
-            // Evening showing
             const eveningTime = new Date(date);
             eveningTime.setHours(20, 0, 0, 0);
             
-            // Create showings with random movies
             const randomMovie1 = movies[Math.floor(Math.random() * movies.length)];
             const randomMovie2 = movies[Math.floor(Math.random() * movies.length)];
             const randomMovie3 = movies[Math.floor(Math.random() * movies.length)];
@@ -248,17 +243,14 @@ async function seed() {
         console.log('Reservations already seeded');
       }
       
-      // Commit transaction
       await queryRunner.commitTransaction();
       console.log("Database seeding completed successfully!");
       
     } catch (error) {
-      // Rollback transaction on error
       console.error("Error during seeding, rolling back:", error);
       await queryRunner.rollbackTransaction();
       throw error;
     } finally {
-      // Release query runner
       await queryRunner.release();
     }
     
@@ -272,5 +264,4 @@ async function seed() {
   }
 }
 
-// Run the seed function
 seed();
